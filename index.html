@@ -29,14 +29,27 @@
     var map = L.map('map');
     map.setView([52.0126,4.3004], 11);
 
-    L.tileLayer('https://b.tiles.mapbox.com/v3/nelenschuurmans.iaa98k8k/{z}/{x}/{y}.png', {
+    var basemap = L.tileLayer('https://b.tiles.mapbox.com/v3/nelenschuurmans.iaa98k8k/{z}/{x}/{y}.png', {
         attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
         maxZoom: 18
     }).addTo(map);    
 
-    L.tileLayer.wms('https://geoserver9.lizard.net/geoserver/gwc/service/wms?LAYERS=hhdl_halo%3Ahhdl-halo-tuiinders&FORMAT=image%2Fpng&SERVICE=WMS&VERSION=1.1.1&REQUEST=GetMap&STYLES=&SRS=EPSG%3A3857&WIDTH=256&HEIGHT=256').addTo(map);
+    var map_ok = L.tileLayer.wms('https://geoserver9.lizard.net/geoserver/gwc/service/wms?LAYERS=hhdl_halo%3Ahhdl-halo-tuiinders&FORMAT=image%2Fpng&SERVICE=WMS&VERSION=1.1.1&REQUEST=GetMap&STYLES=&SRS=EPSG%3A3857&WIDTH=256&HEIGHT=256').addTo(map);
 
-    // L.tileLayer.wms('https://geoserver9.lizard.net/geoserver/hhdl_halo/gwc/service/wms?SERVICE=WMS&REQUEST=GetMap&VERSION=1.1.1&LAYERS=hhdl-halo-tuiinders&STYLES=&FORMAT=image%2Fpng&TRANSPARENT=true&HEIGHT=256&WIDTH=256&ZINDEX=1000&UUID=7bc51df&SLUG=hhdl-halo-tuiinders&COMPLEXWMSOPTIONS=%5Bobject%20Object%5D&URL=https%3A%2F%2Fgeoserver9.lizard.net%2Fgeoserver%2Fhhdl_halo%2Fgwc%2Fservice%2Fwms&SRS=EPSG%3A3857&OPACITY=1.0').addTo(map);
+    var map_false = L.tileLayer.wms('https://geoserver9.lizard.net/geoserver/hhdl_halo/gwc/service/wms?SERVICE=WMS&REQUEST=GetMap&VERSION=1.1.1&LAYERS=hhdl-halo-tuiinders&STYLES=&FORMAT=image%2Fpng&TRANSPARENT=true&HEIGHT=256&WIDTH=256&ZINDEX=1000&UUID=7bc51df&SLUG=hhdl-halo-tuiinders&COMPLEXWMSOPTIONS=%5Bobject%20Object%5D&URL=https%3A%2F%2Fgeoserver9.lizard.net%2Fgeoserver%2Fhhdl_halo%2Fgwc%2Fservice%2Fwms&SRS=EPSG%3A3857&OPACITY=1.0');
+
+    var baseMaps = {
+        "Topo": basemap
+    };
+
+
+    var overlayMaps = {
+      "goed": map_ok,
+      "niet goed": map_false
+    };
+
+    L.control.layers(baseMaps, overlayMaps).addTo(map);
+
   </script>
 </body>
 </html>
